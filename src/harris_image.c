@@ -113,8 +113,22 @@ image smooth_image(image im, float sigma)
 image structure_matrix(image im, float sigma)
 {
     image S = make_image(im.w, im.h, 3);
-    // TODO: calculate structure matrix for im.
-    return S;
+    image filter_ix = make_gx_filter();
+    image filter_iy = make_gy_filter();
+    image ix = convolve_image(im, filter_ix, 0);
+    image iy = convolve_image(im, filter_iy, 0);
+    for (int j = 0; j < im.w; j++){
+        for (int k = 0; k < im.h; k++){
+            float px = get_pixel(ix, j, k, 0);
+            float py = get_pixel(iy, j, k, 0);
+            set_pixel(S, j, k, 0, px * px);
+            set_pixel(S, j, k, 1, py * py);
+            set_pixel(S, j, k, 2, px * py);
+
+        }
+    }
+
+    return smooth_image(S, sigma);
 }
 
 // Estimate the cornerness of each pixel given a structure matrix S.
