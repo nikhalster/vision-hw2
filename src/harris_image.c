@@ -159,6 +159,19 @@ image cornerness_response(image S)
 image nms_image(image im, int w)
 {
     image r = copy_image(im);
+    for (int j = 0; j < im.w; j++){
+        for (int k = 0; k < im.h; k++){
+            float center_pixel = get_pixel(im, j, k, 0);
+            for(int l = j - w; l <= j+w; l++){
+                for(int m = k - w; m <= k+w; m++){
+                if (get_pixel(im, l, m, 0) > center_pixel){
+                    set_pixel(r, j, k, 0, -999999);
+                };
+            }
+            }
+        }
+    }
+
     // TODO: perform NMS on the response map.
     // for every pixel in the image:
     //     for neighbors within w:
