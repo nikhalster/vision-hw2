@@ -5,6 +5,7 @@
 #include <assert.h>
 #include "image.h"
 #include "matrix.h"
+#include <float.h>
 
 // Comparator for matches
 // const void *a, *b: pointers to the matches to compare.
